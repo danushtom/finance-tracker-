@@ -1,0 +1,57 @@
+# Default category taxonomy (FR-5.3). Two-level: category -> subcategories.
+# `class` drives all Safe-to-Spend maths, never the name (ADR-3, FR-5.2).
+
+- name: Housing
+  class: fixed
+  subcategories: [Rent, Maintenance]
+- name: Utilities
+  class: fixed
+  subcategories: [Internet, Electricity, Mobile]
+- name: Subscriptions
+  class: fixed
+  subcategories: [Streaming, Music, News]
+- name: Software & AI
+  class: fixed
+  subcategories: [AI Tools, Dev Tools, Cloud]
+- name: Food
+  class: variable
+  subcategories: [Groceries, Delivery, Dining Out]
+- name: Transport
+  class: variable
+  subcategories: [Fuel, Cabs, Travel]
+- name: Shopping
+  class: variable
+  subcategories: [Clothing, Electronics, Household]
+- name: Health
+  class: variable
+  subcategories: [Medical, Fitness, Insurance]
+- name: Entertainment
+  class: variable
+  subcategories: [Days Out, Games, Events]
+- name: Cigarettes
+  class: isolated
+  subcategories: []
+- name: Alcohol
+  class: isolated
+  subcategories: []
+- name: Cash Withdrawal
+  class: variable
+  subcategories: []
+- name: Fees & Charges
+  class: variable
+  subcategories: []
+- name: Gifts & Donations
+  class: variable
+  subcategories: []
+- name: Income
+  class: income
+  subcategories: [Salary, Project Income, Interest, Refunds]
+- name: Transfers
+  class: transfer
+  subcategories: []
+- name: Investments
+  class: investment
+  subcategories: [Mutual Funds, Stocks, Gold, PPF/EPF]
+- name: Uncategorised
+  class: variable
+  subcategories: []

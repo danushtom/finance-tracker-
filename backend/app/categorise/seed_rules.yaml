@@ -1,0 +1,126 @@
+# Seed rule pack for common Indian merchants (FR-4.11).
+# `pattern` is matched against the normalised (uppercased) merchant string.
+# `category` / `subcategory` are resolved to ids per-user at seed time
+# against that user's seeded category taxonomy.
+
+- pattern: SWIGGY
+  match_type: contains
+  category: Food
+  subcategory: Delivery
+- pattern: ZOMATO
+  match_type: contains
+  category: Food
+  subcategory: Delivery
+- pattern: BLINKIT
+  match_type: contains
+  category: Food
+  subcategory: Groceries
+- pattern: ZEPTO
+  match_type: contains
+  category: Food
+  subcategory: Groceries
+- pattern: BIGBASKET
+  match_type: contains
+  category: Food
+  subcategory: Groceries
+- pattern: AMAZON
+  match_type: contains
+  category: Shopping
+  subcategory: Household
+- pattern: FLIPKART
+  match_type: contains
+  category: Shopping
+  subcategory: Household
+- pattern: MYNTRA
+  match_type: contains
+  category: Shopping
+  subcategory: Clothing
+- pattern: NETFLIX
+  match_type: contains
+  category: Subscriptions
+  subcategory: Streaming
+- pattern: SPOTIFY
+  match_type: contains
+  category: Subscriptions
+  subcategory: Music
+- pattern: JIO
+  match_type: contains
+  category: Utilities
+  subcategory: Mobile
+- pattern: AIRTEL
+  match_type: contains
+  category: Utilities
+  subcategory: Mobile
+- pattern: IRCTC
+  match_type: contains
+  category: Transport
+  subcategory: Travel
+- pattern: UBER
+  match_type: contains
+  category: Transport
+  subcategory: Cabs
+- pattern: OLA
+  match_type: contains
+  category: Transport
+  subcategory: Cabs
+- pattern: RAPIDO
+  match_type: contains
+  category: Transport
+  subcategory: Cabs
+- pattern: HPCL
+  match_type: contains
+  category: Transport
+  subcategory: Fuel
+- pattern: IOC
+  match_type: contains
+  category: Transport
+  subcategory: Fuel
+- pattern: INDIAN OIL
+  match_type: contains
+  category: Transport
+  subcategory: Fuel
+- pattern: BHARAT PETROLEUM
+  match_type: contains
+  category: Transport
+  subcategory: Fuel
+- pattern: AWS
+  match_type: contains
+  category: Software & AI
+  subcategory: Cloud
+- pattern: AMAZON WEB SERVICES
+  match_type: contains
+  category: Software & AI
+  subcategory: Cloud
+- pattern: GITHUB
+  match_type: contains
+  category: Software & AI
+  subcategory: Dev Tools
+- pattern: OPENAI
+  match_type: contains
+  category: Software & AI
+  subcategory: AI Tools
+- pattern: ANTHROPIC
+  match_type: contains
+  category: Software & AI
+  subcategory: AI Tools
+- pattern: CLAUDE
+  match_type: contains
+  category: Software & AI
+  subcategory: AI Tools
+- pattern: GOOGLE CLOUD
+  match_type: contains
+  category: Software & AI
+  subcategory: Cloud
+- pattern: GOOGLE
+  match_type: contains
+  category: Software & AI
+  subcategory: Cloud
+- pattern: ATM WDL
+  match_type: contains
+  category: Cash Withdrawal
+- pattern: ATM CASH
+  match_type: contains
+  category: Cash Withdrawal
+- pattern: CASH WITHDRAWAL
+  match_type: contains
+  category: Cash Withdrawal
