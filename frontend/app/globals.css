@@ -2,4 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* No design system yet — layout utilities only, per current scope. */
+@layer base {
+  body {
+    @apply bg-background text-card-foreground antialiased;
+  }
+}
+
+/* Base custom classes for the design system */
+@layer components {
+  .glass-card {
+    @apply bg-surface/90 backdrop-blur-md shadow-soft rounded-3xl border border-border/50;
+  }
+}

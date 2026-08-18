@@ -34,7 +34,7 @@ async def db(mongo_container):
     from motor.motor_asyncio import AsyncIOMotorClient
 
     uri = mongo_container.get_connection_url()
-    client = AsyncIOMotorClient(uri)
+    client = AsyncIOMotorClient(uri, tz_aware=True)  # match app.db.get_client (see its comment)
     database = client["finance_tracker_test"]
     from app.db import ensure_indexes
 

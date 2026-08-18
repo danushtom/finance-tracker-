@@ -23,7 +23,15 @@ def get_client() -> AsyncIOMotorClient:
     global _client
     if _client is None:
         settings = get_settings()
-        _client = AsyncIOMotorClient(settings.mongodb_uri, uuidRepresentation="standard")
+        # `tz_aware=True` makes every datetime Motor hands back carry
+        # tzinfo=UTC. Without this, MongoDB (which stores no timezone
+        # metadata) returns naive datetimes, and comparing one against
+        # `utcnow()` (aware, from app.models.common) raises
+        # "can't compare offset-naive and offset-aware datetimes" —
+        # this bit refresh-token expiry checks in particular.
+        _client = AsyncIOMotorClient(
+            settings.mongodb_uri, uuidRepresentation="standard", tz_aware=True
+        )
     return _client
 
 

@@ -43,10 +43,18 @@ def _validate_object_id(v: Any) -> ObjectId:
 # `MongoModel`, which sets `arbitrary_types_allowed=True`. `WithJsonSchema`
 # gives it a sane OpenAPI representation (a string) instead of failing
 # schema generation for the docs.
+#
+# `when_used="json"` is load-bearing and must not be removed: repository
+# writes build their BSON document with `model_dump(mode="python")`, so an
+# always-on serializer would stringify every `_id`/`user_id` on the way
+# INTO Mongo. Reads then look those documents up by real `ObjectId` and
+# match nothing — login succeeds (it queries by email) while every
+# authenticated request 401s. Python mode must yield a real `ObjectId`;
+# only JSON/API output gets the string form.
 PyObjectId = Annotated[
     ObjectId,
     PlainValidator(_validate_object_id),
-    PlainSerializer(lambda v: str(v), return_type=str),
+    PlainSerializer(lambda v: str(v), return_type=str, when_used="json"),
     WithJsonSchema({"type": "string"}),
 ]
 
