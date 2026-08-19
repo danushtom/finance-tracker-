@@ -11,6 +11,8 @@ backups/
 
 node_modules/
 .next/
+.next-*/
+lint-report.json
 out/
 frontend/types/api.ts.generated
 

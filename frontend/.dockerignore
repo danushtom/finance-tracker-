@@ -1,0 +1,25 @@
+# Without this, `COPY . .` in the Dockerfile overwrites the container's
+# Linux node_modules with the host's — which on Windows means shipping
+# @next/swc-win32-x64-msvc into a Linux image, and Next fails to boot.
+node_modules
+.next
+.next-*
+out
+build
+
+# Local env and editor state must never leak into the image.
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+.vscode
+.idea
+
+# Build/test artifacts
+*.tsbuildinfo
+lint-report.json
+coverage
+npm-debug.log*
+yarn-error.log*
+.DS_Store

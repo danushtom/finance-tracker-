@@ -7,13 +7,13 @@ once and unit-testable independently of the HTTP layer.
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import UTC, date, datetime
 from typing import Any
 
 from bson import ObjectId
 from pymongo.errors import BulkWriteError
 
-from app.models.common import Minor
+from app.models.common import Minor, to_utc_datetime
 from app.models.transaction import Transaction
 from app.repositories.base import Repository
 
@@ -64,11 +64,12 @@ class TransactionRepository(Repository[Transaction]):
             start, end = _month_bounds(month)
             query["date"] = {"$gte": start, "$lt": end}
         if date_from or date_to:
+            # Converted to datetime: BSON cannot encode a bare `date`.
             date_q: dict[str, Any] = {}
             if date_from:
-                date_q["$gte"] = date_from
+                date_q["$gte"] = to_utc_datetime(date_from)
             if date_to:
-                date_q["$lte"] = date_to
+                date_q["$lte"] = to_utc_datetime(date_to)
             query["date"] = {**query.get("date", {}), **date_q}
         if account_id:
             query["account_id"] = account_id
@@ -103,8 +104,9 @@ class TransactionRepository(Repository[Transaction]):
         up_to: date | None = None,
     ) -> Minor:
         start, end = _month_bounds(month)
-        if up_to:
-            end = min(end, up_to)
+        up_to_dt = to_utc_datetime(up_to)
+        if up_to_dt:
+            end = min(end, up_to_dt)
         match: dict[str, Any] = {
             "user_id": user_id,
             "date": {"$gte": start, "$lt": end},
@@ -219,8 +221,14 @@ class TransactionRepository(Repository[Transaction]):
         return await self.col.count_documents(query)
 
 
-def _month_bounds(month: str) -> tuple[date, date]:
+def _month_bounds(month: str) -> tuple[datetime, datetime]:
+    """Half-open [start, end) bounds for a "YYYY-MM" month key.
+
+    Returns `datetime`, not `date`: these values go straight into Mongo
+    query filters, and BSON cannot encode a bare `datetime.date`
+    (`InvalidDocument`). See `to_utc_datetime` in app.models.common.
+    """
     year, mon = int(month[:4]), int(month[5:7])
-    start = date(year, mon, 1)
-    end = date(year + 1, 1, 1) if mon == 12 else date(year, mon + 1, 1)
+    start = datetime(year, mon, 1, tzinfo=UTC)
+    end = datetime(year + 1, 1, 1, tzinfo=UTC) if mon == 12 else datetime(year, mon + 1, 1, tzinfo=UTC)
     return start, end

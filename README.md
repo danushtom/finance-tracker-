@@ -10,7 +10,7 @@ built from.
 ## Stack
 
 - **Backend**: FastAPI + Motor (async MongoDB) + a Mongo-backed job queue/worker
-- **Frontend**: Next.js 15 (App Router) + TypeScript strict + TanStack Query
+- **Frontend**: Next.js 16 (App Router, Turbopack) + TypeScript strict + TanStack Query
 - **Database**: MongoDB 7, single-node replica set (required for multi-document
   transactions — see `docs/TECHNICAL_DESIGN.md` ADR-7)
 - **LLM categorisation fallback**: pluggable — **Gemini or Claude, chosen per user**

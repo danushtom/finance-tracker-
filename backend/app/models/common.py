@@ -91,6 +91,21 @@ MongoDate = Annotated[
 ]
 
 
+def to_utc_datetime(value: date | datetime | None) -> datetime | None:
+    """Coerce a calendar date to the UTC-midnight `datetime` BSON needs.
+
+    BSON has no date-only type, so a bare `datetime.date` fails to encode
+    with `InvalidDocument`. Document *fields* handle this via `MongoDate`,
+    but query filters are built as plain dicts in the repository layer and
+    must call this explicitly before any `date` reaches Mongo.
+    """
+    if value is None:
+        return None
+    if isinstance(value, datetime):
+        return value if value.tzinfo else value.replace(tzinfo=UTC)
+    return datetime(value.year, value.month, value.day, tzinfo=UTC)
+
+
 def to_bson_safe(value: Any) -> Any:
     """Recursively converts bare `datetime.date` values (BSON has no
     date-only type) to UTC-midnight `datetime`, leaving everything else

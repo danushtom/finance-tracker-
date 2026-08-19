@@ -26,7 +26,7 @@ The two hard architectural constraints are fixed up front (C-2): **FastAPI backe
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │  Browser                                                     │
-│  Next.js 15 (App Router) · TypeScript · Tailwind · shadcn/ui │
+│  Next.js 16 (App Router) · TypeScript · Tailwind · shadcn/ui │
 │  TanStack Query · Recharts · Zod                             │
 └───────────────────────────┬──────────────────────────────────┘
                             │  HTTPS/JSON  (OpenAPI-generated client)
@@ -91,7 +91,7 @@ frontend polls GET /imports/{id} until terminal state
 
 | Layer | Choice | Why |
 |---|---|---|
-| Frontend | Next.js 15 (App Router), TypeScript strict | Constraint C-2; server components for shells keep the client bundle small |
+| Frontend | Next.js 16 (App Router, Turbopack), TypeScript strict | Constraint C-2; server components for shells keep the client bundle small |
 | Styling | Tailwind CSS + shadcn/ui | Copy-in components, no runtime dependency lock-in, accessible primitives (NFR-15) |
 | Charts | Recharts | Composable, sensible defaults, adequate for the 4–5 chart types needed |
 | Data fetching | TanStack Query | Cache invalidation on mutation is the mechanism behind FR-8.3.6 client-side |

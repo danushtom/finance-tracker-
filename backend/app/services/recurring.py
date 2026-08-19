@@ -17,6 +17,7 @@ from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from app.models.commitment import Commitment, CommitmentStatus
+from app.models.common import to_utc_datetime
 from app.repositories.commitments import CommitmentRepository
 from app.repositories.transactions import TransactionRepository
 
@@ -48,7 +49,8 @@ async def detect_recurring_commitments(db: AsyncIOMotorDatabase, user_id: Object
     txn_repo = TransactionRepository(db)
     commitment_repo = CommitmentRepository(db)
 
-    cutoff = date.today() - timedelta(days=365)
+    # `to_utc_datetime`: BSON cannot encode a bare `date` in a query filter.
+    cutoff = to_utc_datetime(date.today() - timedelta(days=365))
     debits = await txn_repo.find(
         user_id, {"direction": "debit", "date": {"$gte": cutoff}}, sort=[("date", 1)]
     )

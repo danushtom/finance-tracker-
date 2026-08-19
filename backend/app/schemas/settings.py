@@ -7,6 +7,7 @@ from app.models.user import LLMSettings, VariableSplit
 
 
 class SettingsUpdate(BaseModel):
+    currency: str | None = None
     buffer_minor: Minor | None = None
     low_confidence_threshold: int | None = None
     monthly_savings_target_minor: Minor | None = None

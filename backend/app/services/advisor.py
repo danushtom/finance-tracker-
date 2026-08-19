@@ -120,7 +120,7 @@ async def detect_anomalies(db: AsyncIOMotorDatabase, user: User, *, today: date 
     txn_repo = TransactionRepository(db)
     commitment_repo = CommitmentRepository(db)
     current_month = f"{today:%Y-%m}"
-    prior_months = _last_n_months(today, 4)[1:]  # exclude current month
+    prior_months = last_n_months(today, 4)[1:]  # exclude current month
 
     anomalies: list[Anomaly] = []
 
